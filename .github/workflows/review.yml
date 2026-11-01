@@ -82,9 +82,9 @@ jobs:
             --max-turns 30
             --allowedTools "mcp__github_inline_comment__create_inline_comment,Bash(gh pr diff:*),Bash(gh pr view:*),Read,Grep,Glob"
 
-      # The agent's own `gh pr comment` calls were refused in some runs, so those
-      # reviews posted nothing. Posting its final message here makes every finished
-      # review leave a comment.
+      # The agent sometimes ended without running `gh pr comment`, so those reviews
+      # posted nothing. Posting its final message here makes every finished review
+      # leave a comment.
       - name: Post the review summary
         if: steps.token.outputs.present == 'true'
         env:
