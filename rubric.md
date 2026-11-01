@@ -1,6 +1,6 @@
 # Judge rubric
 
-Failure modes the judge looks for in agent sessions and their PRs. Each finding cites the session, the PR and file:line. Add an item when a new failure mode shows up.
+Failure modes the judge looks for in agent sessions and their PRs. Each finding cites the session, the PR and file:line. The judge doesn't edit this file; it suggests new items to Boris in its report.
 
 1. Unnecessary tests: tests that duplicate existing coverage, test internals or trivia, or only pad the coverage number.
 2. Inconsistent code: code that ignores the repo's existing patterns or introduces anti-patterns, where an existing helper, type or convention already fits.
