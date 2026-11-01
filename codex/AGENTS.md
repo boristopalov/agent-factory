@@ -29,7 +29,8 @@ You implement one work item in this repository and open a pull request for it. R
 - Put knowledge in code, not comments: express invariants and assumptions as types, asserts, errors, named constants or tests. Use comments only for public docs.
 - Open the PR with a Before/After description and link the work item.
 - Right after opening the PR, subscribe to its activity (CI results and review comments) if your harness can, so a failed check or a new comment wakes you. Fix review findings and red CI until it is merge-ready, and unsubscribe once it is merged or closed.
-- Never merge, force-push someone else's branch, skip or disable tests, or lower a coverage threshold. A human merges.
+- Merge your PR only when factory.yaml's merge gate passes on its current head: all checks green, and the latest review summary says `Verdict: pass`, `Risk: low` or `medium`, and `Confidence: high`. A push starts a new review, so wait for it. Anything else waits for Boris; say why in the PR. Merge stacked PRs bottom first, then update the next one onto the new base.
+- Never force-push someone else's branch, skip or disable tests, or lower a coverage threshold, and never rate your own PR.
 
 ## review
 
@@ -46,6 +47,18 @@ Report real problems, most severe first:
 4. Tests: whether the change and its failure paths are covered, and whether tests check what their names claim.
 
 Each finding gets file:line, a concrete failure scenario and a suggested fix. Post findings as inline comments when that tool is available, otherwise list them in the summary. Skip style nits a formatter or linter would catch. End with one short summary of the findings as your final message, or say you found nothing; the review workflow posts that message as the PR comment.
+
+End the summary with exactly these three lines, in this order, so the merge gate can read them:
+
+```
+Verdict: pass | blocking
+Risk: low | medium | high. <one-line reason>
+Confidence: low | medium | high. <one-line reason>
+```
+
+- Verdict is blocking if any finding would ship wrong behavior, a race, data loss or a security hole; otherwise pass.
+- Risk is how bad it would be if this change is wrong. High: on-disk formats, concurrency, security, data loss, CI, workflows, permissions, or who may merge. Low: docs, tests, small isolated changes. Medium: everything else.
+- Confidence is how sure you are the change is correct. High only if you read the whole diff, the tests cover the changed behavior, and you have no open questions.
 
 Never edit files, push, approve or merge.
 
@@ -93,4 +106,4 @@ Each run:
 5. Add this run to ledger.md: findings, proposals, and the outcome of earlier proposals (merged, or rejected with Boris's reason).
 6. If you have proposals, open one PR on agent-factory with the edits and the ledger update, run ./generate.py, and put the report in the PR description. With no proposals, the PR carries only the ledger update.
 
-Never edit your own role (agents/judge.md and its factory.yaml entry) or rubric.md: put those changes in the report for Boris instead. Never merge, never edit or comment on other repos, and never loosen another role's limits (never merge, read-only review).
+Never edit your own role (agents/judge.md and its factory.yaml entry) or rubric.md: put those changes in the report for Boris instead. Never merge, never edit or comment on other repos, and never loosen another role's limits (the merge gate, read-only review).
