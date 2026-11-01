@@ -1,7 +1,7 @@
 #!/bin/sh
 # Bootstrap a repo for the agent loop in one command:
 #   - copies the agent files (.claude/agents) and, if missing, factory.yaml
-#   - adds the Claude review caller workflow, if missing
+#   - adds the PR template and the Claude review caller workflow, if missing
 #   - sets the CLAUDE_CODE_OAUTH_TOKEN secret from your environment, if set
 # Usage: CLAUDE_CODE_OAUTH_TOKEN=... ./install.sh /path/to/repo
 set -eu
@@ -20,6 +20,15 @@ if [ "$target" != "$here" ]; then
     todo="$todo
 - Edit factory.yaml's queue: line to point at this repo's Linear project."
   fi
+fi
+
+tpl="$target/.github/pull_request_template.md"
+if [ -e "$tpl" ]; then
+  echo "Kept the existing .github/pull_request_template.md"
+else
+  mkdir -p "$(dirname "$tpl")"
+  cp "$here/.github/pull_request_template.md" "$tpl"
+  echo "Added .github/pull_request_template.md"
 fi
 
 wf="$target/.github/workflows/claude-review.yml"
