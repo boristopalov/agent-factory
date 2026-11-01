@@ -92,6 +92,12 @@ jobs:
           EXECUTION_FILE: ${{ steps.claude.outputs.execution_file }}
           PR_NUMBER: ${{ inputs.pr_number }}
         run: |
+          # The action runs no review when the caller workflow differs from
+          # the default branch's copy, as on a PR that adds it.
+          if [ -z "$EXECUTION_FILE" ] || [ ! -f "$EXECUTION_FILE" ]; then
+            echo "::notice::The action ran no review, so there is no summary to post."
+            exit 0
+          fi
           jq -rs 'flatten(1) | map(select(.type == "result")) | last | .result // empty' "$EXECUTION_FILE" > summary.md
           if [ ! -s summary.md ]; then
             echo "::error::The review finished without a summary to post."
