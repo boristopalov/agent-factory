@@ -23,12 +23,8 @@ if [ "$target" != "$here" ]; then
 fi
 
 wf="$target/.github/workflows/claude-review.yml"
-visibility="$(cd "$target" && gh repo view --json visibility -q .visibility 2>/dev/null || echo unknown)"
 if [ -e "$wf" ]; then
   echo "Kept the existing .github/workflows/claude-review.yml"
-elif [ "$visibility" = PUBLIC ]; then
-  todo="$todo
-- Review workflow not added: a public repo can't call agent-factory's private reusable workflow. Make agent-factory public, or copy its review.yml into this repo."
 else
   mkdir -p "$(dirname "$wf")"
   cp "$here/templates/claude-review.yml" "$wf"

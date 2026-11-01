@@ -25,7 +25,7 @@ Repo-specific knowledge (architecture, comment policy, how to run tests) stays i
 
 - Install the Claude GitHub app on all your repos (choose "All repositories" when installing), so new repos need nothing here.
 - Get a review token with `claude setup-token` and keep it in your shell, for example in your password manager or an env file you don't commit. Personal GitHub accounts have no account-wide secrets, so `install.sh` sets it on each repo.
-- This repo is private. A private repo's reusable workflow can only be called by your other private repos, and only after you allow it under this repo's Settings, Actions, General, Access ("Accessible from repositories owned by the user"). For public repos like cmudb to call it, make this repo public, or keep a copy of the workflow in that repo instead.
+- This repo is public, so any of your repos, public or private, can call its review workflow.
 
 ## Bootstrapping a repo
 
