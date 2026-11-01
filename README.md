@@ -18,6 +18,7 @@ Our coding agents and the loop between them, as versioned files. Inspired by War
 - `generate.py`: writes each harness's files from `agents/` and `factory.yaml`: `.claude/agents/` for Claude Code and `codex/AGENTS.md` for Codex. Those are generated; don't edit them by hand.
 - `.github/workflows/review.yml`: the Claude PR review as a reusable workflow, running the `review` agent.
 - `templates/claude-review.yml`: the short workflow each repo uses to call it.
+- `.github/pull_request_template.md`: the PR template every repo gets. Its `Fixes BOR-<n>` line lets Linear's GitHub integration track the issue.
 - `install.sh`: bootstraps a repo in one command.
 
 Repo-specific knowledge (architecture, comment policy, how to run tests) stays in each repo's `CLAUDE.md` or `CONTRIBUTING.md`; every agent reads those first.
