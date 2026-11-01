@@ -23,8 +23,12 @@ if [ "$target" != "$here" ]; then
 fi
 
 wf="$target/.github/workflows/claude-review.yml"
+visibility="$(cd "$target" && gh repo view --json visibility -q .visibility 2>/dev/null || echo unknown)"
 if [ -e "$wf" ]; then
   echo "Kept the existing .github/workflows/claude-review.yml"
+elif [ "$visibility" = PUBLIC ]; then
+  todo="$todo
+- Review workflow not added: a public repo can't call agent-factory's private reusable workflow. Make agent-factory public, or copy its review.yml into this repo."
 else
   mkdir -p "$(dirname "$wf")"
   cp "$here/templates/claude-review.yml" "$wf"
@@ -32,8 +36,12 @@ else
 fi
 
 if [ -n "${CLAUDE_CODE_OAUTH_TOKEN:-}" ]; then
-  (cd "$target" && printf %s "$CLAUDE_CODE_OAUTH_TOKEN" | gh secret set CLAUDE_CODE_OAUTH_TOKEN)
-  echo "Set the CLAUDE_CODE_OAUTH_TOKEN secret"
+  if (cd "$target" && printf %s "$CLAUDE_CODE_OAUTH_TOKEN" | gh secret set CLAUDE_CODE_OAUTH_TOKEN); then
+    echo "Set the CLAUDE_CODE_OAUTH_TOKEN secret"
+  else
+    todo="$todo
+- Setting the secret failed (is gh logged in, and does the repo have a GitHub remote?). Set CLAUDE_CODE_OAUTH_TOKEN by hand."
+  fi
 else
   todo="$todo
 - Set the review secret: run 'claude setup-token', then rerun with CLAUDE_CODE_OAUTH_TOKEN set."

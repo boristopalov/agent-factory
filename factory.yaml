@@ -55,7 +55,8 @@ targets:
   codex:
     # Codex uses the model in your Codex config; set one here to pin it.
     models: {}
-    # Roles without edit run in Codex's read-only sandbox.
+    # Roles without edit say to start Codex with --sandbox read-only;
+    # AGENTS.md can't enforce that itself.
 
 stages:
   triage:
