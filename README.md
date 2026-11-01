@@ -5,12 +5,12 @@ Our coding agents and the loop between them, as versioned files. Inspired by War
 ## What's here
 
 - `.claude/agents/*.md`: one file per role, in Claude Code's subagent format (frontmatter: `name`, `description`, `tools`, `model`; body: the prompt).
-  - `triage`: decides implement, spec or wait. Read-only.
+  - `triage`: works the Linear Backlog: moves ready issues to Todo, splits big ones, flags decisions for Boris.
   - `implement`: makes the change and opens a PR. Never merges.
   - `review`: reviews a PR diff and ranks findings by severity with file:line. Read-only; never approves.
   - `test`: adds tests toward the coverage gate. Never weakens tests or thresholds.
   - `benchmark`: measures a change against its base, by hand, never in CI.
-- `factory.yaml`: the stages, their triggers and handoffs, and the merge gates. Each stage and gate says whether a real workflow enforces it (`enforced_by`) or a person or session starts it (`manual`).
+- `factory.yaml`: the loop. Linear is the queue (Backlog, Todo, In Progress, Done); it lists each stage's trigger and handoff, the merge gates, and when Boris gets pinged. Each stage says whether a GitHub workflow runs it (`enforced_by`) or the coordinator's scheduled run starts it (`scheduled`).
 - `install.sh`: copies the agents and `factory.yaml` into another repo.
 
 Repo-specific knowledge (architecture, comment policy, how to run tests) stays in each repo's `CLAUDE.md` or `CONTRIBUTING.md`; every agent reads those first.
