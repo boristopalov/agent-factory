@@ -73,7 +73,7 @@ stages:
     agent: implement
     trigger: { linear: { state: Todo } }
     scheduled: true
-    max_parallel: 2
+    max_parallel: 5
     sets_state: In Progress
     output: pull_request
     watches_own_pr: true       # subscribes to its PR's CI and review events, fixes until merge-ready
