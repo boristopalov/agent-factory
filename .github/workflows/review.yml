@@ -49,6 +49,24 @@ jobs:
           fetch-depth: 0
           ref: refs/pull/${{ inputs.pr_number }}/head
 
+      # Load the reviewer from agent-factory's main, not the PR, so a PR
+      # can't rewrite its own reviewer and repos without the agent file work.
+      - uses: actions/checkout@v5
+        if: steps.token.outputs.present == 'true'
+        with:
+          repository: boristopalov/agent-factory
+          ref: main
+          path: .agent-factory
+          sparse-checkout: .claude/agents/review.md
+          sparse-checkout-cone-mode: false
+
+      - name: Use the shared review agent
+        if: steps.token.outputs.present == 'true'
+        run: |
+          mkdir -p .claude/agents
+          cp .agent-factory/.claude/agents/review.md .claude/agents/review.md
+          rm -rf .agent-factory
+
       - uses: anthropics/claude-code-action@v1
         if: steps.token.outputs.present == 'true'
         with:

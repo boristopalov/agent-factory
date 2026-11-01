@@ -43,7 +43,7 @@ claude --agent implement
 
 For Codex, copy `codex/AGENTS.md` to the repo's `AGENTS.md` and ask it to act as a role.
 
-The review workflow reads the agent from the PR's own checkout, so a PR can change its reviewer's prompt. That's fine for a solo repo where only you open PRs (fork PRs get no secrets, so they're not reviewed). The Claude Action also only runs once the caller workflow is on the default branch, so it can't review the PR that adds it.
+The review workflow loads the review agent from agent-factory's main, not from the PR, so a PR can't change its own reviewer and repos work before they have the agent file. Fork PRs get no secrets, so they're not reviewed. The Claude Action also only runs once the caller workflow is on the default branch, so it can't review the PR that adds it.
 
 ## Changing an agent
 
