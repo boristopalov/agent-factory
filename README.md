@@ -10,6 +10,8 @@ Our coding agents and the loop between them, as versioned files. Inspired by War
   - `review`: reviews a PR diff and ranks findings by severity with file:line. Read-only; never approves.
   - `test`: adds tests toward the coverage gate. Never weakens tests or thresholds.
   - `benchmark`: measures a change against its base, by hand, never in CI.
+  - `judge`: weekly, reviews past agent sessions and their PRs against `rubric.md` (unnecessary tests, code that breaks existing patterns, scope creep, and more) and opens an agent-factory PR with proposed changes to the factory itself.
+- `rubric.md`: the failure modes the judge scores against. It grows as the judge finds new ones.
 - `factory.yaml`: the loop, plus each role's settings. Linear is the queue (Backlog, Todo, In Progress, Done). It lists each stage's trigger and handoff, the merge gates, and when Boris gets pinged. `agents:` gives each role a description, a model tier (`strong` or `fast`) and its tools; `targets:` maps those to each harness.
 - `generate.py`: writes each harness's files from `agents/` and `factory.yaml`: `.claude/agents/` for Claude Code and `codex/AGENTS.md` for Codex. Those are generated; don't edit them by hand.
 - `.github/workflows/review.yml`: the Claude PR review as a reusable workflow, running the `review` agent.

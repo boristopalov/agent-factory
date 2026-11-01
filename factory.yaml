@@ -43,6 +43,10 @@ agents:
     description: Measures performance of a change against a baseline. Runs by hand, never in CI.
     model: fast
     tools: all
+  judge:
+    description: Evaluates past agent sessions and their PRs against rubric.md for failure modes, and proposes changes to the factory in an agent-factory PR. Runs weekly.
+    model: strong
+    tools: all
 
 targets:
   claude-code:
@@ -88,6 +92,13 @@ stages:
   benchmark:
     agent: benchmark
     trigger: { on_request: true }   # by hand, never in CI
+
+  judge:
+    agent: judge
+    trigger: { schedule: weekly }   # never in CI
+    scheduled: true
+    inputs: [recent agent sessions, their PRs and diffs, rubric.md]
+    output: findings report, plus a pull_request on agent-factory
 
 # A PR is merge-ready when every gate passes. Boris merges; agents never do.
 gates:
