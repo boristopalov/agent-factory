@@ -6,12 +6,13 @@ Our coding agents and the loop between them, as versioned files. Inspired by War
 
 - `agents/*.md`: one plain prompt per role, with no harness-specific format.
   - `triage`: works the Linear Backlog: moves ready issues to Todo, splits big ones, flags decisions for Boris.
-  - `implement`: makes the change and opens a PR. Never merges.
-  - `review`: reviews a PR diff and ranks findings by severity with file:line. Read-only; never approves.
+  - `implement`: makes the change, opens a PR, and merges it only through the merge gate.
+  - `review`: reviews a PR diff, ranks findings by severity with file:line, and ends with a verdict plus risk and confidence ratings. Read-only; never approves.
   - `test`: adds tests toward the coverage gate. Never weakens tests or thresholds.
   - `benchmark`: measures a change against its base, by hand, never in CI.
   - `judge`: weekly, reviews past agent sessions and their PRs against `rubric.md` (unnecessary tests, code that breaks existing patterns, scope creep, and more) and opens an agent-factory PR with proposed changes to the factory itself.
 - `rubric.md`: the failure modes the judge scores against. Boris edits it; the judge only suggests items.
+- Merge gate (`gates.merge` in `factory.yaml`): an agent may merge a PR when all checks pass, the review's verdict is pass, risk is low or medium, and confidence is high. Everything else waits for Boris, and stacked PRs merge bottom first.
 - `ledger.md`: the judge's log of findings, proposals and their outcomes, so it can check whether a change worked and avoid re-proposing rejected ones. The judge proposes a change only for a pattern seen in 2 or more sessions (or once if severe), at most 3 per run, leaves recently changed files alone for 2 weeks, and never edits its own role or rubric.
 - `factory.yaml`: the loop, plus each role's settings. Linear is the queue (Backlog, Todo, In Progress, Done). It lists each stage's trigger and handoff, the merge gates, and when Boris gets pinged. `agents:` gives each role a description, a model tier (`strong` or `fast`) and its tools; `targets:` maps those to each harness.
 - `generate.py`: writes each harness's files from `agents/` and `factory.yaml`: `.claude/agents/` for Claude Code and `codex/AGENTS.md` for Codex. Those are generated; don't edit them by hand.
