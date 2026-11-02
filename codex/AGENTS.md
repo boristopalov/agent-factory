@@ -23,8 +23,9 @@ Implements a triaged work item and opens a pull request. Use when the acceptance
 You implement one work item in this repository and open a pull request for it. Read CLAUDE.md and CONTRIBUTING.md if they exist.
 
 - When the work item is a Linear issue, move it to In Progress when you start and link the PR to it.
-- Work on a new branch. Change only what the issue asks; never go past its scope, even for a fix you notice along the way.
-- List anything extra you'd do as proposed follow-ups, both in the PR's Follow-ups section and in your final report, so each can become its own issue.
+- Work on a new branch. Change only what the issue asks; never go past its scope, even for a fix you notice along the way. The one exception is a small follow-up a review finds, below.
+- When a review raises a follow-up that is small, fix it in this PR instead of filing it. It is small only if all of these hold: it stays in the files the PR already changes or code directly tied to them; it adds no public API, config option, dependency or design decision; it adds about 50 changed lines or fewer; and it doesn't change the issue's goal. Say in your reply to the finding that you fixed it here.
+- List everything else you'd do as proposed follow-ups, both in the PR's Follow-ups section and in your final report, so each can become its own issue. When unsure whether a follow-up is small, treat it as not small.
 - Add or update tests for the behavior you change, including failure paths.
 - Before pushing, run the repo's own formatter, linter and tests and make them pass.
 - Build tests on the repo's shared test helpers (such as `tests/common`) and extend those when they lack something, instead of writing new setup in your test file or module.
@@ -52,12 +53,12 @@ Report real problems, most severe first:
 1. Correctness: wrong results, edge cases, error paths that leave partial state.
 2. Concurrency: lock ordering, leaked resources, races, deadlocks.
 3. Hidden knowledge: comments or unstated rules a reader must remember that should be code (types, asserts, errors, constants, tests).
-4. Scope: changes the linked issue doesn't ask for. Each one is blocking; suggest moving it to a follow-up issue.
+4. Scope: changes the linked issue doesn't ask for. Each one is blocking; suggest moving it to a follow-up issue. A fix for a small follow-up that an earlier review on this PR raised is in scope, not scope creep.
 5. Tests: whether the change and its failure paths are covered, and whether tests check what their names claim.
 
 Before writing findings, read the PR's earlier reviews and the author's replies (`gh pr view --comments`). Don't raise a finding again that the author answered with a reason or listed as a follow-up, unless this push changed the code it's about; if you still disagree, say so once in the summary and leave it to Boris.
 
-Each finding gets file:line, a concrete failure scenario and a suggested fix. Post findings as inline comments when that tool is available, otherwise list them in the summary. Skip style nits a formatter or linter would catch. End with one short summary of the findings as your final message, or say you found nothing; the review workflow posts that message as the PR comment.
+Each finding gets file:line, a concrete failure scenario and a suggested fix. When you suggest a follow-up, say whether it is small enough to fix in this PR or should be its own issue. Small means all of: it stays in the files the PR changes or code directly tied to them, adds no public API, config option, dependency or design decision, adds about 50 changed lines or fewer, and doesn't change the issue's goal. Post findings as inline comments when that tool is available, otherwise list them in the summary. Skip style nits a formatter or linter would catch. End with one short summary of the findings as your final message, or say you found nothing; the review workflow posts that message as the PR comment.
 
 End the summary with exactly these three lines, in this order, so the merge gate can read them:
 
