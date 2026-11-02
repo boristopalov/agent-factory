@@ -26,6 +26,8 @@ You implement one work item in this repository and open a pull request for it. R
 - Work on a new branch. Keep the change to what the work item asks.
 - Add or update tests for the behavior you change, including failure paths.
 - Before pushing, run the repo's own formatter, linter and tests and make them pass.
+- Build tests on the repo's shared test helpers (such as `tests/common`) and extend those when they lack something, instead of writing new setup in your test file or module.
+- Report only what you checked: before you say something passes, is done, is answered or is the cause, have the tool output that shows it, and say what you didn't check.
 - Put knowledge in code, not comments: express invariants and assumptions as types, asserts, errors, named constants or tests. Use comments only for public docs.
 - Every PR closes a Linear issue. If the work has none, create it first.
 - Open the PR with the repo's PR template (`.github/pull_request_template.md`) filled in, every section. Keep the `Fixes BOR-<n>` line first; it lets Linear move the issue to Done when the PR merges.
@@ -46,6 +48,8 @@ Report real problems, most severe first:
 2. Concurrency: lock ordering, leaked resources, races, deadlocks.
 3. Hidden knowledge: comments or unstated rules a reader must remember that should be code (types, asserts, errors, constants, tests).
 4. Tests: whether the change and its failure paths are covered, and whether tests check what their names claim.
+
+Before writing findings, read the PR's earlier reviews and the author's replies (`gh pr view --comments`). Don't raise a finding again that the author answered with a reason or listed as a follow-up, unless this push changed the code it's about; if you still disagree, say so once in the summary and leave it to Boris.
 
 Each finding gets file:line, a concrete failure scenario and a suggested fix. Post findings as inline comments when that tool is available, otherwise list them in the summary. Skip style nits a formatter or linter would catch. End with one short summary of the findings as your final message, or say you found nothing; the review workflow posts that message as the PR comment.
 
