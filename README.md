@@ -5,7 +5,7 @@ Our coding agents and the loop between them, as versioned files. Inspired by War
 ## What's here
 
 - `agents/*.md`: one plain prompt per role, with no harness-specific format.
-  - `triage`: works the Linear Backlog: moves ready issues to Todo, splits big ones, flags decisions for Boris.
+  - `triage`: works the Linear Backlog highest priority first: moves ready issues to Todo, splits big ones, flags decisions for Boris.
   - `implement`: makes the change, opens a PR, and merges it only through the merge gate.
   - `review`: reviews a PR diff, ranks findings by severity with file:line, and ends with a verdict plus risk and confidence ratings. Read-only; never approves.
   - `test`: adds tests toward the coverage gate. Never weakens tests or thresholds.
