@@ -7,7 +7,7 @@
 # the generated files.
 #
 # Linear is the queue. Issue states:
-#   Backlog      new or needs a decision; triage works these
+#   Backlog      new or needs a decision; triage works these, highest priority first
 #   Todo         ready; any agent may pick it up
 #   In Progress  an agent is working on it or its PR is open
 #   Done         the PR merged (by an agent through the merge gate, or by Boris)
@@ -67,6 +67,7 @@ stages:
   triage:
     agent: triage
     trigger: { linear: { state: Backlog } }
+    order: Urgent, High, Medium, Low, then No priority
     scheduled: true
     next: implement            # by moving the issue to Todo
 
