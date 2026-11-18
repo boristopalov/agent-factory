@@ -13,6 +13,13 @@ One-offs logged (no proposal): <pattern> (run count so far).
 Follow-up on earlier merged changes: <change>: target failure up, down or flat.
 ```
 
+## 2026-11-16
+Sessions reviewed: 2 (last week's judge thread, 11-09 01:19 to 01:35 UTC, and the coordinator's 11-09 17:05 exchange about PR 17), and 1 PR (agent-factory 17, open). The SDLC loop is still paused (since 11-03 00:07 UTC), so no implement, review or test agent ran: no thread sessions since 11-09 apart from these two, no cmudb PRs opened or merged since PR 58 (11-04), no glassbox PRs, and no new commits on cmudb or glassbox main. Findings: unnecessary tests 0, inconsistent code 0, scope creep 0, ignored role instructions 0, comment policy 0, wasted effort 0. PR 17 touches neither agents/judge.md nor rubric.md, and `./generate.py --check` is clean on its head.
+Proposals: none. A clean week, since no agent work happened.
+Earlier proposals: the 2026-11-09 triage and follow-up proposals (PR 17) are still open, unmerged, with no PR comments or reviews. On 11-09 17:05 UTC Boris said "no need to put that in the agent instructions, i'll add it as a rule in github" in answer to whether PR 17 should mention cmudb's "require branches to be up to date" setting; the coordinator took it as "PR 17 stays as it is". On 11-17 he said "Yes, drop it", so proposal 2's implement.md merge rule was taken out of PR 17 and is now marked rejected.
+One-offs logged (no proposal): none new. The 2026-11-09 one-offs weren't seen again, so their run counts stay at 1.
+Follow-up on earlier merged changes: none merged since the last run, so nothing to check.
+
 ## 2026-11-09
 Sessions reviewed: 42 (38 thread sessions, 3 coordinator sessions, 1 hourly loop run), and 37 PRs (cmudb 23 to 58, agent-factory 16). Transcripts read for every thread session, most in full; the coordinator from 11-03 00:18 to 20:54 UTC wasn't read. The SDLC loop has been paused since 11-03 00:07 UTC, so almost all of this is 11-02 and 11-03. Findings: unnecessary tests 1, inconsistent code 1, scope creep 3, ignored role instructions 12, comment policy 2, wasted effort 8. Outside the rubric: 1 false or unverified claim by an agent (plus 3 borderline), 1 by the coordinator.
 Proposals:
